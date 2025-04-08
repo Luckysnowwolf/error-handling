@@ -1,3 +1,4 @@
+/*
 import express from "express";
 const app = express();
 
@@ -11,21 +12,30 @@ app.get("/reservation", (req,res) => {
 
 app.use((error, req, res, next) => {
     console.error("error:", error.message);
-    res.status(500).json({message: "internal server error!"})
+    res.status(500).json({message: "internal server error!"});
+});
+
+app.get((req,res) => {
+    try {
+        throw new Error("Database is down")
+    } catch (error) {
+        res.status(500).json({ error: error.message });
+    }
 })
 
 app.listen(3000, () => console.log(`server is runing on http://localhost 3000`))
 
-
+*/
 
 const reserveTable = () => {
-    const error = Math.random() > 0.5 ? "its full!" : null;
+    setTimeout(() => {
+    const error = Math.random() > 0.5 ? "we are full please pick another day or try a later time!" : null;
     if(error) {
-        Callback(error);
-    } 
-    else {
-        callback(null, "we are not full");
+        Callback(error, null);
+    } else {
+        callback(null, "your table is booked hope you enjoy our service");
     }
+}, 1000);
 };
 
 reserveTable((error, success) => {
@@ -38,7 +48,7 @@ reserveTable((error, success) => {
 });
 
 
-
+/*
 const reserveTable2 = () => {
     return new Promise((resolve, reject) => {
         const error = Math.random() > 0.5 ? "its full!" : null;
@@ -74,4 +84,4 @@ const makeReservation = async() => {
 
 makeReservation();
 
-
+*/
